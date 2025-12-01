@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 
 from torch_geometric.data import Batch
-
 from transformers import BertModel, BertTokenizer
 
 from submodel.unimodal_encoder import UnimodalEncoder
@@ -149,3 +148,4 @@ if __name__ == '__main__':
         al.append(torch.ones(size=(425, 25), device=device))
         vl.append(torch.ones(size=(232, 177), device=device))
     print(model(tl, al, vl))
+
