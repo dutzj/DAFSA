@@ -61,30 +61,30 @@ def frame_structure_initialization_module(batch_data, remove_zero=True):
     return fs_intra, fs_inter
 
 
-def generate_test_data(batch_size, device):
+def generate_test_data(batch_size, dim_t, dim_a, dim_v, device):
     batch_t, batch_a, batch_v = [], [], []
     for i in range(batch_size):
         batch_t.append(
             torch.cat(
                 (
-                    torch.rand((4, 256), dtype=torch.float, device=device),
-                    torch.zeros((2, 256), dtype=torch.float, device=device)),
+                    torch.rand((4, dim_t), dtype=torch.float, device=device),
+                    torch.zeros((2, dim_t), dtype=torch.float, device=device)),
                 dim=0
                 ),
             )
         batch_a.append(
             torch.cat(
                 (
-                    torch.rand((3, 256), dtype=torch.float, device=device),
-                    torch.zeros((3, 256), dtype=torch.float, device=device)),
+                    torch.rand((3, dim_a), dtype=torch.float, device=device),
+                    torch.zeros((3, dim_a), dtype=torch.float, device=device)),
                 dim=0
             ),
         )
         batch_v.append(
             torch.cat(
                 (
-                    torch.rand((2, 256), dtype=torch.float, device=device),
-                    torch.zeros((4, 256), dtype=torch.float, device=device)),
+                    torch.rand((2, dim_v), dtype=torch.float, device=device),
+                    torch.zeros((4, dim_v), dtype=torch.float, device=device)),
                 dim=0
             ),
         )
@@ -94,7 +94,7 @@ def generate_test_data(batch_size, device):
 if __name__ == '__main__':
 
     torch.set_printoptions(threshold=10000, linewidth=2000)
-    test_data = generate_test_data(2, device=torch.device('cuda'))
+    test_data = generate_test_data(2, 256, 256, 256, device=torch.device('cuda'))
 
     fs_ra, fs_er = frame_structure_initialization_module(test_data, remove_zero=True)
     print(fs_ra.edge_index.shape)

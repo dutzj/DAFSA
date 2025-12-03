@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 
 from torch_geometric.data import Batch
+
 from transformers import BertModel, BertTokenizer
 
 from submodel.unimodal_encoder import UnimodalEncoder
@@ -137,15 +138,15 @@ class DAFSAModel(nn.Module):
 
 
 if __name__ == '__main__':
+
+    from submodel.fsi_model import generate_test_data
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    model = DAFSAModel(dim_t=768, dim_a=25, dim_v=177, dim_m=512, num_layer=3,
+
+    model = DAFSAModel(dim_t=768, dim_a=74, dim_v=35, dim_m=512, num_layer=3,
                   num_heads=4, k_percent=0.6, concat=True, residual=False).to(device)
 
-    tl, al, vl, = [], [], []
-    for i in range(2):
-        tl.append(torch.ones(size=(50, 768), device=device))
-        al.append(torch.ones(size=(425, 25), device=device))
-        vl.append(torch.ones(size=(232, 177), device=device))
-    print(model(tl, al, vl))
+    test_t, text_a, text_v = generate_test_data(2, 768, 74, 35, device=torch.device('cuda'))
 
+    print(model(test_t, text_a, text_v))
