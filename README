@@ -1,1 +1,4 @@
-Code is being organized and will be uploaded soon.
+Our method is built upon the MessagePassing technique in torch_geometric, with the following main software dependencies: 
+torch==2.5.1+cu124
+torch-geometric==2.6.1
+transformers==4.47.1
